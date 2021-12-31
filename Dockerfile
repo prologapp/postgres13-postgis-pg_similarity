@@ -1,0 +1,16 @@
+FROM kartoza/postgis:13.3
+
+RUN apt-get update\
+    && apt-get install git -y
+
+RUN apt-get -y --purge autoremove  \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/eulerto/pg_similarity.git\
+    && cd pg_similarity\
+    && make\
+    && make install\
+    && cd /scripts
+
+EXPOSE 5432
